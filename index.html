@@ -494,7 +494,8 @@
 
                             <!-- offcanvas - checkout details -->
 
-                            <div class="offcanvas offcanvas-start p-0" tabindex="-1" id="checkoutform" aria-labelledby="checkoutformLabel">
+                            <div class="offcanvas offcanvas-start p-0" tabindex="-1" id="checkoutform"
+                                aria-labelledby="checkoutformLabel">
                                 <!-- Header -->
                                 <div class="offcanvas-header shadow-sm px-4 ms-1">
                                     <h5 class="offcanvas-title text-danger" id="checkoutformLabel">Checkout</h5>
@@ -508,7 +509,9 @@
                                     <div class="px-4 pb-3 shadow-sm mb-3">
                                         <label for="checkout_customer-info" class="fw-bold text-muted">Customer
                                             Information</label>
-                                        <button class="btn" id="checkout_customer-info">
+                                        <!-- Customer Information -->
+                                        <button class="btn p-1" id="btn-checkout_customerinfo" data-bs-toggle="modal"
+                                            data-bs-target="#checkout_customerinfo">
                                             <div class="card card-sm text-start">
                                                 <div class="card-body small text-muted fw-semibold">
                                                     <!-- name -->
@@ -527,7 +530,7 @@
                                                     <!-- address -->
                                                     <p class="card-subtitle small" id="address_specific">
                                                         <i class="bi bi-geo-alt-fill"></i>
-                                                        <span id="address_street">101 Dahon St.</span>,
+                                                        <span id="address_primary">101 Dahon St.</span>,
                                                         <span id="address_brgy">Brgy. Malunggay</span>,
                                                         <span id="address_city">Chicago</span>,
                                                         <span id="address_province">Laguna</span>,
@@ -536,6 +539,8 @@
                                                 </div>
                                             </div>
                                         </button>
+
+
                                     </div>
 
                                     <!-- Payment method -->
@@ -612,12 +617,62 @@
                                     <div class="container-fluid">
                                         <div class="row align-items-center justify-content-between">
                                             <div class="col-6 d-flex align-items-center">
-                                                <h6 class="offcanvas-title text-muted" id="checkoutformLabel">Total:</h6>
+                                                <h6 class="offcanvas-title text-muted" id="checkoutformLabel">Total:
+                                                </h6>
                                                 <span class="badge text-bg-danger ms-2">&#8369 1400</span>
                                             </div>
                                             <div class="col-6 text-end">
                                                 <button class="btn btn-danger">Place Order</button>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Dialog in Customer Information button-->
+                            <!-- Modal -->
+                            <div class="modal fade" id="checkout_customerinfo" tabindex="-1"
+                                aria-labelledby="checkout_customerinfoLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="checkout_customerinfoLabel">Edit
+                                                Information
+                                            </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Information -->
+                                            <form action="">
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-text"><i
+                                                            class="bi bi-person-fill"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Receipient's name">
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                                    <input type="number" class="form-control" placeholder="Phone number">
+                                                </div>
+
+                                                <div class="input-group mb-1">
+                                                    <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                                    <input type="text" class="form-control" placeholder="Home No. / Street / Landmark">
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" placeholder="Barangay">
+                                                    <input type="text" class="form-control" placeholder="City">
+                                                </div>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" placeholder="Province">
+                                                    <input type="number" class="form-control" placeholder="Postal Code">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger">Save
+                                                changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -946,9 +1001,10 @@
             })
         }
 
-        // const myOffcanvas = new bootstrap.Offcanvas('#checkoutform');
-        // document.getElementById('orderCart-tab').click();
-        // myOffcanvas.show(); // Show instantly
+        const myOffcanvas = new bootstrap.Offcanvas('#checkoutform');
+        document.getElementById('orderCart-tab').click();
+        myOffcanvas.show(); // Show instantly
+        document.getElementById('btn-checkout_customerinfo').click();
     </script>
 </body>
 
