@@ -14,6 +14,7 @@ function loadPageFromHash() {
             .then(res => res.text())
             .then(html => {
                 document.getElementById("content").innerHTML = html;
+                initializeDynamicComponents();
             })
             .catch(() => {
                 document.getElementById("content").innerHTML = "<p>Page not found.</p>";

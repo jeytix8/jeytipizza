@@ -6,86 +6,119 @@
                 <span class="fst-italic fs-5 fw-semibold text-muted">One Bite Starts It All.</span>
                 <img class="img-fluid" src="assets/pizza.png" alt="Jeytipizza" width="25">
             </div>
-            <div class="col-md-5 col-9 p-2">
-                <form class="p-2 text-center" action="">
+            <div class="col-md-5 col-9 p-2 text-center">
+                <!--Login Form -->
+                <form class="p-2" action="php/login.php" method="POST">
                     <div class="input-group input-group-lg mb-3">
                         <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
 
                     <div class="input-group input-group-lg mb-3">
                         <span class="input-group-text"><i class="bi bi-key"></i></span>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
-                    <a href="main.html" class="btn btn-danger btn-lg">Login</a>
+                    <button type="submit" class="btn btn-danger btn-lg">Login</button>
+                </form>
 
-                    <p class="mt-2 p-2"><a class="text-decoration-none" type="button" data-bs-toggle="modal"
-                            data-bs-target="#forgotpw">Forgot password?</a>
-                    </p>
-                    <hr />
-                    <div class="p-1">
-                        <button class="btn btn-lg btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Facebook"><i class="bi bi-facebook"></i></button>
-                        <button class="btn btn-lg btn-dark mx-2" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Apple"><i class="bi bi-apple"></i></button>
-                        <button class="btn btn-lg btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Google"><i class="bi bi-google"></i></button>
-                    </div>
+                <!-- Forgot Password -->
+                <p class="mt-2 p-2"><a class="text-decoration-none" type="button" data-bs-toggle="modal"
+                        data-bs-target="#forgotpw">Forgot password?</a>
+                </p>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="forgotpw" tabindex="-1" aria-labelledby="forgotpwLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 class="modal-title fs-5" id="forgotpwLabel">Reset Password</h2>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body justify-content-center p-4">
-                                    <!-- form -->
-                                    <form class="p-3">
-
-                                        <div class="input-group mb-2">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-envelope"></i></span>
-                                            <input type="email" class="form-control" placeholder="Enter your email">
-
-                                            <button type="button" class="btn btn-secondary" id="liveToastBtn">Send
-                                                code</button>
-                                            <!-- Toast Send Code -->
-                                            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                                <div id="liveToast" class="toast" role="alert" aria-live="assertive"
-                                                    aria-atomic="true">
-                                                    <div class="toast-header">
-                                                        <img src="assets/pizza.png" class="rounded me-2" alt=""
-                                                            width="20">
-                                                        <strong class="me-auto">Jeytipizza</strong>
-                                                        <small>1 seconds ago</small>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="toast-body">
-                                                        Code sent to your email.
-                                                    </div>
-                                                </div>
-                                            </div>
+                <!-- Modal: forgot password -->
+                <div class="modal fade" id="forgotpw" tabindex="-1" aria-labelledby="forgotpwLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="forgotpwLabel">Reset Password</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body justify-content-center p-4">
+                                <!-- form -->
+                                <form class="p-3">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-envelope"></i></span>
+                                        <input type="email" class="form-control" placeholder="Enter your email">
+                                        <button type="button" class="btn btn-secondary" id="liveToastBtn">Send
+                                            code</button>
+                                    </div>
+                                    <!-- input group code -->
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-shield-lock"></i></span>
+                                        <input type="text" class="form-control" placeholder="Enter code">
+                                    </div>
+                                </form>
+                                <!-- Toast Send Code -->
+                                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+                                        aria-atomic="true">
+                                        <div class="toast-header">
+                                            <img src="assets/pizza.png" class="rounded me-2" alt="" width="20">
+                                            <strong class="me-auto">Jeytipizza</strong>
+                                            <small>1 seconds ago</small>
+                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                aria-label="Close"></button>
                                         </div>
-                                        <!-- input group code -->
-                                        <div class="input-group">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-shield-lock"></i></span>
-                                            <input type="text" class="form-control" placeholder="Enter code">
+                                        <div class="toast-body text-center">
+                                            Code sent to your email.
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                                <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn-danger" id="btn_verify">Verify</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-danger" id="btn_verify">Verify</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+
+                <hr />
+
+                <!-- Sign Up -->
+                <p class="mt-2 p-2"><button class="text-decoration-none btn btn-dark btn-lg" type="button" data-bs-toggle="modal"
+                        data-bs-target="#createnewacc">Create new account</button>
+                </p>
+
+                <!-- Modal: Sign Up -->
+                <div class="modal fade" id="createnewacc" tabindex="-1" aria-labelledby="createnewaccLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="createnewaccLabel">Register</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <!-- form -->
+                            <form class="p-1" action="php/register.php" method="POST">
+                                <div class="modal-body justify-content-center p-4">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control" name="username" placeholder="Enter a username">
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-envelope"></i></span>
+                                        <input type="email" class="form-control" name="email" placeholder="Enter your email">
+                                    </div>
+                                    <!-- input group code -->
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-key"></i></span>
+                                        <input type="text" class="form-control" name="password" placeholder="Enter a password">
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" class="btn btn-danger" id="btn_verify">Verify Email</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
