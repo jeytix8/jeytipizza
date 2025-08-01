@@ -11,12 +11,12 @@
                 <form class="p-2" action="php/login.php" method="POST">
                     <div class="input-group input-group-lg mb-3">
                         <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" class="form-control" name="username" placeholder="Username" required>
                     </div>
 
                     <div class="input-group input-group-lg mb-3">
                         <span class="input-group-text"><i class="bi bi-key"></i></span>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
                     <button type="submit" class="btn btn-danger btn-lg">Login</button>
                 </form>
@@ -35,43 +35,45 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body justify-content-center p-4">
-                                <!-- form -->
-                                <form class="p-3">
+                            <!-- form -->
+                            <form class="p-3" method="post" action="php/mailer.php">
+                                <div class="modal-body justify-content-center p-4">
+                                    
                                     <div class="input-group mb-2">
                                         <span class="input-group-text">
                                             <i class="bi bi-envelope"></i></span>
-                                        <input type="email" class="form-control" placeholder="Enter your email">
-                                        <button type="button" class="btn btn-secondary" id="liveToastBtn">Send
+                                        <input type="email" class="form-control" placeholder="Enter your email"
+                                            >
+                                        <button type="submit" name="send"  class="btn btn-secondary" id="liveToastBtn">Send
                                             code</button>
                                     </div>
                                     <!-- input group code -->
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-shield-lock"></i></span>
-                                        <input type="text" class="form-control" placeholder="Enter code">
+                                        <input type="text" class="form-control" placeholder="Enter code" >
                                     </div>
-                                </form>
-                                <!-- Toast Send Code -->
-                                <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                    <div id="liveToast" class="toast" role="alert" aria-live="assertive"
-                                        aria-atomic="true">
-                                        <div class="toast-header">
-                                            <img src="assets/pizza.png" class="rounded me-2" alt="" width="20">
-                                            <strong class="me-auto">Jeytipizza</strong>
-                                            <small>1 seconds ago</small>
-                                            <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="toast-body text-center">
-                                            Code sent to your email.
+                                    <!-- Toast Send Code -->
+                                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                        <div id="liveToast" class="toast" role="alert" aria-live="assertive"
+                                            aria-atomic="true">
+                                            <div class="toast-header">
+                                                <img src="assets/pizza.png" class="rounded me-2" alt="" width="20">
+                                                <strong class="me-auto">Jeytipizza</strong>
+                                                <small>1 seconds ago</small>
+                                                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="toast-body text-center">
+                                                Code sent to your email.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-danger" id="btn_verify">Verify</button>
-                            </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-danger" >Verify</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -79,43 +81,48 @@
                 <hr />
 
                 <!-- Sign Up -->
-                <p class="mt-2 p-2"><button class="text-decoration-none btn btn-dark btn-lg" type="button" data-bs-toggle="modal"
-                        data-bs-target="#createnewacc">Create new account</button>
+                <p class="mt-2 p-2"><button class="text-decoration-none btn btn-dark btn-lg" type="button"
+                        data-bs-toggle="modal" data-bs-target="#registerModal">Create new account</button>
                 </p>
 
                 <!-- Modal: Sign Up -->
-                <div class="modal fade" id="createnewacc" tabindex="-1" aria-labelledby="createnewaccLabel" aria-hidden="true">
+                <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h2 class="modal-title fs-5" id="createnewaccLabel">Register</h2>
+                                <h2 class="modal-title fs-5" id="registerModalLabel">Sign Up</h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <!-- form -->
-                            <form class="p-1" action="php/register.php" method="POST">
+
+                            <!--Register form -->
+                            <form class="p-1" action="php/mailer.php" method="POST">
                                 <div class="modal-body justify-content-center p-4">
                                     <div class="input-group mb-2">
                                         <span class="input-group-text">
                                             <i class="bi bi-person"></i></span>
-                                        <input type="text" class="form-control" name="username" placeholder="Enter a username">
+                                        <input type="text" class="form-control" name="username"
+                                            placeholder="Enter a username" required>
                                     </div>
                                     <div class="input-group mb-2">
                                         <span class="input-group-text">
                                             <i class="bi bi-envelope"></i></span>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter your email">
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="Enter your email" required>
                                     </div>
                                     <!-- input group code -->
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-key"></i></span>
-                                        <input type="text" class="form-control" name="password" placeholder="Enter a password">
+                                        <input type="text" class="form-control" name="password"
+                                            placeholder="Enter a password" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="submit" class="btn btn-danger" id="btn_verify">Verify Email</button>
+                                    <button type="submit" name="register" class="btn btn-danger" id="btn_register">Register</button>
                                 </div>
-                            </form>    
+                            </form>
                         </div>
                     </div>
                 </div>
