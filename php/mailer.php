@@ -10,46 +10,51 @@ require 'phpmailer/vendor/autoload.php';
 include 'connect.php';
 
 // Mailer Class
-class Mailer{
+class Mailer
+{
     // Variables
     var $register_code;
     var $username = '';
     var $email = '';
 
-    function __construct() {
+    function __construct()
+    {
         $this->register_code = rand(100000, 999999);
     }
-    function setUsername($newUsername){
+    function setUsername($newUsername)
+    {
         $this->username = $newUsername;
     }
-    function setEmail($newEmail){
+    function setEmail($newEmail)
+    {
         $this->email = $newEmail;
     }
-        
-    function sendMail(){
+
+    function sendMail()
+    {
         try {
             //Create an instance; passing `true` enables exceptions
             $mail = new PHPMailer(true);
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'jayteex8@gmail.com';                     //SMTP username
-            $mail->Password   = 'uddvcpomokaxrqvz';                               //SMTP password
+            $mail->Host = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth = true;                                   //Enable SMTP authentication
+            $mail->Username = 'jayteex8@gmail.com';                     //SMTP username
+            $mail->Password = 'uddvcpomokaxrqvz';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        
+            $mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
             //Recipients
             $mail->setFrom('jayteex8@gmail.com', 'Jeytipizza');
-            $mail->addAddress(  $this->email, $this->username);     //Add a recipient
-        
+            $mail->addAddress($this->email, $this->username);     //Add a recipient
+
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Register Account';
-            $mail->Body    = 'Hi, '.$this->username.'! <br/><br/> To verify creating your account, put this code in your registration form. <br/> <strong>'.$this->register_code.'</strong>';
-            $mail->AltBody = 'Registration Code:'.$this->register_code;
-            
+            $mail->Body = 'Hi, ' . $this->username . '! <br/><br/> To verify creating your account, put this code in your registration form. <br/> <strong>' . $this->register_code . '</strong>';
+            $mail->AltBody = 'Registration Code:' . $this->register_code;
+
             $mail->send();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -60,7 +65,7 @@ class Mailer{
 
 // --------------------------------------------------------------------------
 // Clicked register
-if(isset($_POST['register'])){
+if (isset($_POST['register'])) {
     $reg_user = trim($_POST['username']);
     $reg_email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -70,31 +75,42 @@ if(isset($_POST['register'])){
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if($result->num_rows > 0){
+    if ($result->num_rows > 0) {
         echo 'User exists!';
-    }
-    else{
+    } else {
         // Send Code
         $reg = new Mailer;
         $reg->setUsername($reg_user);
         $reg->setEmail($reg_email);
         $reg->sendMail();
-        echo $reg->register_code;
+
+        $user = [
+            "username" => $reg_user,
+            "email" => $reg_email,
+            "password" => $password,
+            "register_code" => $reg->register_code
+        ];
+
+        echo json_encode($user);
     }
 
     $stmt->close();
 }
 
+// Verified Register
+if (isset($_POST['verified_code'])) {
+    $insertUn = trim($_POST['username']);
+    $insertPw = trim($_POST['password']);
+    $insertEmail = trim($_POST['email']);
 
-// $sql = "INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)";
-// $stmt = $conn->prepare($sql);
-// $stmt->bind_param("sss", $username, $password, $email);
+    $stmt = $conn->prepare("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $insertUn, $insertPw, $insertEmail);
 
-// if($stmt->execute()){
-//     echo 'success';
-// }
-// else{
-//     echo 'Error: '.$stmt->error;
-// }
+    if ($stmt->execute()) {
+        echo 'Register successful!';
+    } else {
+        echo 'Error: ' . $stmt->error;
+    }
+}
 
 
