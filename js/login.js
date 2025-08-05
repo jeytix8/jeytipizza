@@ -5,6 +5,8 @@ let registerPassword;
 
 $(document).on('submit', '#register_form', function (e) {
     e.preventDefault();
+    $('#register-btn').html(showLoader.removeClass('d-none'));
+    $('#register-btn').prop('disabled', true);
 
     $.ajax({
         url: 'php/mailer.php',
@@ -12,18 +14,29 @@ $(document).on('submit', '#register_form', function (e) {
         data: $(this).serialize(),
         success: function (response) {
             try {
-                let data = JSON.parse(response);
-                codeVerify = data.register_code;
-                registerUsername = data.username;
-                registerEmail = data.email;
-                registerPassword = data.password;
+                if (response == 'exists') {
+                    alert("User Exists!")
+                }
+                else {
+                    let data = JSON.parse(response);
+                    codeVerify = data.register_code;
+                    registerUsername = data.username;
+                    registerEmail = data.email;
+                    registerPassword = data.password;
 
-                $('#register_form').addClass('d-none');
-                $('#registerverify_form').removeClass('d-none');
-                alert('Code sent to your email!');
-            } catch (e) {
+                    showToast(`Registration code sent to: <span class="fw-semibold text-muted">${registerEmail}</span>`);
+                    
+                    $('#register_form').addClass('d-none');
+                    $('#registerverify_form').removeClass('d-none');
+                }
+            }
+            catch (e) {
                 alert('Failed to parse server response.');
             }
+
+            // Button revert after the response
+            $('#register-btn').html('Register');
+            $('#register-btn').prop('disabled', false);
         },
         error: function (xhr, status, error) {
             alert('AJAX error: ' + error);
@@ -49,13 +62,19 @@ $(document).on('submit', '#registerverify_form', function (e) {
             success: function (response) {
                 if (response === '') {
                     alert('No response!');
-                } else {
-                    alert(response);
-                    $('#registerverify_form').addClass('d-none');
+                }
+                else {
+                    showToast(response);
 
                     // Close modal properly
                     let modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
                     modal.hide();
+
+                    $('#registerverify_form').addClass('d-none');
+                    $('#registerverify_form')[0].reset();
+
+                    $('#register_form').removeClass('d-none');
+                    $('#register_form')[0].reset();
                 }
             },
             error: function (xhr, status, error) {
@@ -64,6 +83,6 @@ $(document).on('submit', '#registerverify_form', function (e) {
         });
     }
     else {
-        alert("Invalid Code");
+        showToast("Invalid Code");
     }
 });

@@ -1,4 +1,5 @@
 // Map hash to HTML file
+$('#loading').addClass('d-none');
 const routes = {
     home: "landing/home.html",
     about: "landing/about.html",
@@ -14,7 +15,6 @@ function loadPageFromHash() {
             .then(res => res.text())
             .then(html => {
                 document.getElementById("content").innerHTML = html;
-                initializeDynamicComponents();
             })
             .catch(() => {
                 document.getElementById("content").innerHTML = "<p>Page not found.</p>";

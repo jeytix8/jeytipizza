@@ -76,7 +76,7 @@ if (isset($_POST['register'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo 'User exists!';
+        echo 'exists';
     } else {
         // Send Code
         $reg = new Mailer;
@@ -100,7 +100,8 @@ if (isset($_POST['register'])) {
 // Verified Register
 if (isset($_POST['verified_code'])) {
     $insertUn = trim($_POST['username']);
-    $insertPw = trim($_POST['password']);
+    $hashedPassword = password_hash(trim($_POST['password']), PASSWORD_BCRYPT);
+    $insertPw = $hashedPassword;
     $insertEmail = trim($_POST['email']);
 
     $stmt = $conn->prepare("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)");
