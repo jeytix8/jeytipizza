@@ -35,27 +35,42 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <!-- form -->
-                            <form class="p-3" method="post" action="php/mailer.php">
+
+                            <!-- form: reset password -->
+                            <form class="p-3" id="forgot_form">
                                 <div class="modal-body justify-content-center p-4">
                                     
                                     <div class="input-group mb-2">
                                         <span class="input-group-text">
                                             <i class="bi bi-envelope"></i></span>
-                                        <input type="email" class="form-control" placeholder="Enter your email"
-                                            >
-                                        <button type="submit" name="send"  class="btn btn-secondary" id="liveToastBtn">Send
+                                        <input type="text" class="form-control" placeholder="Enter your email or username" id="forgot-user" required>
+                                        <button type="button" class="btn btn-secondary" id="forgot-sendcode-btn">Send
                                             code</button>
                                     </div>
                                     <!-- input group code -->
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-shield-lock"></i></span>
-                                        <input type="text" class="form-control" placeholder="Enter code" >
+                                        <input type="text" id="forgot-code" class="form-control" placeholder="Enter code">
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn-danger" >Verify</button>
+                                    <button type="button" class="btn btn-danger" id="forgot-verify-btn">Verify</button>
+                                </div>
+                            </form>
+
+                            <!-- form: enter new password -->
+                            <form class="p-3 d-none" id="newpass_form">
+                                <div class="modal-body justify-content-center p-4">
+                                    <!-- input group code -->
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-key"></i></span>
+                                        <input type="text" id="newpass" class="form-control" placeholder="Enter new password" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-danger" id="newpass-btn">Continue</button>
                                 </div>
                             </form>
                         </div>

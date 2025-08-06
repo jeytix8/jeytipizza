@@ -6,8 +6,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader (created by composer, not included with PHPMailer)
-require 'phpmailer/vendor/autoload.php';
-include 'connect.php';
+require '../assets/phpmailer/vendor/autoload.php';
 
 // Mailer Class
 class Mailer
@@ -16,6 +15,9 @@ class Mailer
     var $register_code;
     var $username = '';
     var $email = '';
+    var $subject = '';
+    var $body = '';
+    var $altBody = '';
 
     function __construct()
     {
@@ -25,9 +27,49 @@ class Mailer
     {
         $this->username = $newUsername;
     }
+    function getUsername()
+    {
+        return $this->username;
+    }
+
     function setEmail($newEmail)
     {
         $this->email = $newEmail;
+    }
+    function getEmail()
+    {
+        return $this->email;
+    }
+
+    function setSubject($newSubject)
+    {
+        $this->subject = $newSubject;
+    }
+    function getSubject()
+    {
+        return $this->subject;
+    }
+
+    function setBody($newBody)
+    {
+        $this->body = $newBody;
+    }
+    function getBody()
+    {
+        return $this->body;
+    }
+
+    function setAltBody($newAltBody)
+    {
+        $this->altBody = $newAltBody;
+    }
+    function getAltBody()
+    {
+        return $this->altBody;
+    }
+    function getRegisterCode()
+    {
+        return $this->register_code;
     }
 
     function sendMail()
@@ -51,9 +93,9 @@ class Mailer
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Register Account';
-            $mail->Body = 'Hi, ' . $this->username . '! <br/><br/> To verify creating your account, put this code in your registration form. <br/> <strong>' . $this->register_code . '</strong>';
-            $mail->AltBody = 'Registration Code:' . $this->register_code;
+            $mail->Subject = $this->getSubject();
+            $mail->Body = $this->getBody();
+            $mail->AltBody = $this->getAltBody();
 
             $mail->send();
         } catch (Exception $e) {
@@ -62,56 +104,3 @@ class Mailer
     }
 
 }
-
-// --------------------------------------------------------------------------
-// Clicked register
-if (isset($_POST['register'])) {
-    $reg_user = trim($_POST['username']);
-    $reg_email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-
-    $stmt = $conn->prepare("SELECT * FROM accounts WHERE username = ? OR email = ?");
-    $stmt->bind_param('ss', $reg_user, $reg_email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo 'exists';
-    } else {
-        // Send Code
-        $reg = new Mailer;
-        $reg->setUsername($reg_user);
-        $reg->setEmail($reg_email);
-        $reg->sendMail();
-
-        $user = [
-            "username" => $reg_user,
-            "email" => $reg_email,
-            "password" => $password,
-            "register_code" => $reg->register_code
-        ];
-
-        echo json_encode($user);
-    }
-
-    $stmt->close();
-}
-
-// Verified Register
-if (isset($_POST['verified_code'])) {
-    $insertUn = trim($_POST['username']);
-    $hashedPassword = password_hash(trim($_POST['password']), PASSWORD_BCRYPT);
-    $insertPw = $hashedPassword;
-    $insertEmail = trim($_POST['email']);
-
-    $stmt = $conn->prepare("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $insertUn, $insertPw, $insertEmail);
-
-    if ($stmt->execute()) {
-        echo 'Register successful!';
-    } else {
-        echo 'Error: ' . $stmt->error;
-    }
-}
-
-
