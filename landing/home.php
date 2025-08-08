@@ -12,7 +12,7 @@
                         Savings.</div>
                     <div class="fst-italic mt-4 fs-6 text-muted">One Bite Starts It All.</div>
                 </h1>
-                <a href="main.html" class="btn btn-danger btn-lg mt-2">Order Now</a>
+                <a href="login.php" class="btn btn-danger btn-lg mt-2">Order Now</a>
             </div>
 
             <!-- Logo -->

@@ -84,12 +84,13 @@ if (isset($_POST['enteredForgotUser'])) {
 
         $verifyForgot = [
             "user" => $enteredUser,
-            "forgot_code" => $forgot->getRegisterCode()
+            "forgot_code" => $forgot->getRegisterCode(),
+            "email" => $email
         ];
 
         echo json_encode($verifyForgot);
     } else {
-        echo 'User does not exists!';
+        echo json_encode('notFound');
     }
 
     $stmt->close();

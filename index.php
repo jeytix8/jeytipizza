@@ -11,7 +11,7 @@
     <title>Jeytipizza</title>
     <style>
         section {
-            padding: 110px 0;
+            padding: 130px 0;
         }
     </style>
 </head>
@@ -37,7 +37,7 @@
                         <a class="nav-link" href="#about" aria-disabled="true">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#login">Login</a>
+                        <a class="nav-link" href="login.php" aria-disabled="true">Login</a>
                     </li>
                 </ul>
             </div>
@@ -49,34 +49,15 @@
     </div>
 
     <!-- Bootstrap -->
-    <!-- Toast Send Code -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <img src="assets/pizza.png" class="rounded me-2" alt="" width="20">
-                <strong class="me-auto">Jeytipizza</strong>
-                <small>1 seconds ago</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body text-center">
-                <!-- showToast(message) -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Spinner -->
-    <span class="spinner-border spinner-border-sm" role="status" id="loading">
-        <span class="visually-hidden">Loading...</span>
-    </span>
+    <?php include 'includes/bootstrap.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
-    <script src="js/bootstrap-function.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/content-loader.js"></script>
+    <script src="script/bootstrap-function.js"></script>
+    <script src="script/content-loader.js"></script>
 </body>
 
 </html>

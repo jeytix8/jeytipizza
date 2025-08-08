@@ -1,9 +1,8 @@
 // Map hash to HTML file
 $('#loading').addClass('d-none');
 const routes = {
-    home: "landing/home.html",
-    about: "landing/about.html",
-    login: "landing/login.html",
+    home: "landing/home.php",
+    about: "landing/about.php",
 };
 // Load page content based on current hash
 function loadPageFromHash() {

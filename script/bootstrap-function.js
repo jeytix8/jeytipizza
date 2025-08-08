@@ -1,11 +1,14 @@
 // Toast
-function showToast(message) {
+function showToast(message, duration) {
     $('#liveToast .toast-body').html(message);
 
     const toast = document.getElementById('liveToast')
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast)
-    toastBootstrap.show(1000)
+    toastBootstrap.show()
+
+    setTimeout(()=>{
+        toastBootstrap.hide();
+    }, duration)
 }
 
-$('#loading').addClass('d-none');
 const showLoader = $('#loading');

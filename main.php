@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +19,7 @@
     <title>Jeytipizza</title>
     <style>
         section {
-            padding: 110px 0;
+            padding: 130px 0;
         }
     </style>
 </head>
@@ -31,7 +39,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="landing/../#login">Logout</a>
+                        <a class="nav-link" href="controller/logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -662,6 +670,14 @@
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
     <script src="js/bootstrap.js"></script>
-</body>
 
+    <script>
+        // If coming from back/forward cache, force reload to trigger session check
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
 </html>
