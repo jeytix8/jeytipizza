@@ -77,7 +77,7 @@ if (isset($_POST['enteredForgotUser'])) {
         $forgot->setUsername($username);
         $forgot->setEmail($email);
         $forgot->setSubject('Forgot Password Verification Code'); 
-        $forgot->setBody('Hi, <strong>' . $username . '</strong>! <br/><br/> To verify creating your account, put this code in your registration form. <br/><br/> <strong>' . $forgot->getRegisterCode() . '</strong>');
+        $forgot->setBody("Hi, <strong>" . $username . "</strong>! <br/><br/> To verify your password reset request, please enter the following code in the reset password form. <br/><br/> <strong>" . $forgot->getRegisterCode() . "</strong>");
         $forgot->setAltBody('Registration Code: ' . $forgot->getRegisterCode());
 
         $forgot->sendMail();

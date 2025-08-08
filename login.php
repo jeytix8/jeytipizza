@@ -30,7 +30,7 @@ if (isset($_SESSION['userID'])) {
         <div class="container-lg py-md-5 my-md-5">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-5 col-9 mb-5 text-md-start text-center text-decoration-none">
-                    <a href="index.php"><img class="img-fluid" src="assets/jeytipizza_text.png" alt="Jeytipizza" width="320"></a><br>
+                    <a href="index.php"><img class="img-fluid" src="assets/jeytipizza_text.png" alt="Jeytipizza" width="300"></a><br>
                     <span class="fst-italic fs-5 fw-semibold text-muted">One Bite Starts It All.</span>
                     <img class="img-fluid" src="assets/pizza.png" alt="Jeytipizza" width="25">
                 </div>
@@ -100,7 +100,7 @@ if (isset($_SESSION['userID'])) {
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i></span>
-                                            <input type="text" id="newpass" class="form-control"
+                                            <input type="password" id="newpass" class="form-control"
                                                 placeholder="Enter new password" required>
                                         </div>
                                     </div>
