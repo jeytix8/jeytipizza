@@ -46,9 +46,10 @@ if (isset($_POST['verified_code'])) {
     $hashedPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $insertPw = $hashedPassword;
     $insertEmail = trim($_POST['email']);
+    $insertType = 'customer';
 
-    $stmt = $conn->prepare("INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $insertUn, $insertPw, $insertEmail);
+    $stmt = $conn->prepare("INSERT INTO accounts (username, password, email, type) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $insertUn, $insertPw, $insertEmail, $insertType);
 
     if ($stmt->execute()) {
         echo 'Register successful!';

@@ -1,12 +1,26 @@
 // Map hash to HTML file
-$('#loading').addClass('d-none');
-const routes = {
-    home: "landing/home.php",
-    about: "landing/about.php",
-};
+let routes;
+let defaultContent;
+function setContent(contentRoutes, defaultContentPage) {
+    routes = contentRoutes;
+    defaultContent = defaultContentPage;
+
+    // Visualization
+    // routes = {
+    //     home: "landing/home.php",
+    //     about: "landing/about.php",
+    // }
+
+    // Usage
+    // setContent({
+    //     contacts: "contacts.html",
+    //     main: "index.php"
+    // }, 'main')
+}
+
 // Load page content based on current hash
 function loadPageFromHash() {
-    const hash = window.location.hash.substring(1) || "home"; // default to home
+    const hash = window.location.hash.substring(1) || defaultContent; // default to home
     const page = routes[hash];
 
     if (page) {

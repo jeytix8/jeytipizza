@@ -6,7 +6,6 @@ if (isset($_SESSION['userID'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,12 +39,12 @@ if (isset($_SESSION['userID'])) {
                         <div class="input-group input-group-lg mb-3">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
                             <input type="text" class="form-control" name="username" placeholder="Username or Email"
-                                required>
+                                required autocomplete="off">
                         </div>
 
                         <div class="input-group input-group-lg mb-3">
                             <span class="input-group-text"><i class="bi bi-key"></i></span>
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Password" required autocomplete="off">
                         </div>
                         <button type="submit" class="btn btn-danger btn-lg" id="login-btn">Login</button>
                     </form>
@@ -101,7 +100,7 @@ if (isset($_SESSION['userID'])) {
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i></span>
                                             <input type="password" id="newpass" class="form-control"
-                                                placeholder="Enter new password" required>
+                                                placeholder="Enter new password" required autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
@@ -150,7 +149,7 @@ if (isset($_SESSION['userID'])) {
                                             <span class="input-group-text">
                                                 <i class="bi bi-key"></i></span>
                                             <input type="password" class="form-control" name="password"
-                                                placeholder="Enter a password" required>
+                                                placeholder="Enter a password" required autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
@@ -191,14 +190,6 @@ if (isset($_SESSION['userID'])) {
         crossorigin="anonymous"></script>
     <script src="script/bootstrap-function.js"></script>
     <script src="script/login.js"></script>
+    <script src="script/cache-resetter.js"></script>
 </body>
-
 </html>
-<script>
-    // If coming from back/forward cache, force reload to trigger session check
-    window.addEventListener('pageshow', function (event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            window.location.reload();
-        }
-    });
-</script>

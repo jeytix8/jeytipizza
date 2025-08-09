@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+// Get the actual request URI (path after your domain)
+$request_uri = $_SERVER['REQUEST_URI'];
+
+// Check: if URI is just "/" or "/jeytipizza" (adjust if your folder name changes)
+if (
+    isset($_SESSION['userID']) &&
+    ($request_uri === '/' || $request_uri === '/jeytipizza/' || $request_uri === '/jeytipizza')
+) {
+    header("Location: main.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,6 +73,13 @@
         crossorigin="anonymous"></script>
     <script src="script/bootstrap-function.js"></script>
     <script src="script/content-loader.js"></script>
+    <script>
+        // Function parameters sent to content-loader.js
+        setContent({
+            home: "landing/home.php",
+            about: "landing/about.php"
+        }, 'home');
+    </script>
 </body>
 
 </html>
