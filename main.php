@@ -5,6 +5,11 @@ if (!isset($_SESSION['userID'])) {
     header("Location: login.php");
     exit();
 }
+
+if ($_SESSION['type'] == 'administrator') {
+    header("Location: admin.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

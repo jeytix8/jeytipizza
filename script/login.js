@@ -11,7 +11,8 @@ $(document).on('submit', '#login_form', function(e){
             if(response == "verified"){
                 $('#login-btn').html('Login').prop('disabled', false);
                 showToast("Login Successfully", 2000);
-                window.location.href = "main.php";
+                // window.location.href = "main.php";
+                window.location.reload();
             }
             else{
                 $('#login-btn').html('Login').prop('disabled', false);

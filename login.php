@@ -2,7 +2,12 @@
 session_start();
 
 if (isset($_SESSION['userID'])) {
-    header('Location: main.php');
+    if($_SESSION['type'] === 'customer'){
+        header('Location: main.php');
+    }
+    else if($_SESSION['type'] === 'administrator'){
+        header('Location: admin.php');
+    }
 }
 ?>
 
