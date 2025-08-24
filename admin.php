@@ -21,6 +21,8 @@ if ($_SESSION['type'] == 'customer') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="shortcut icon" href="assets/pizza.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" />
+
     <title>Administrator</title>
     <style>
         section {
@@ -46,7 +48,7 @@ if ($_SESSION['type'] == 'customer') {
             </a>
             <!-- Profile -->
             <ul class="navbar-nav d-flex align-items-center">
-                <li class="text-white text-end me-2"><small><?php echo $_SESSION['username'];?></small></li>
+                <li class="text-white text-end me-2"><small><?php echo $_SESSION['username']; ?></small></li>
                 <!-- Profile -->
                 <li class="nav-item dropdown">
                     <a class="nav-link p-0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,6 +75,8 @@ if ($_SESSION['type'] == 'customer') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script/bootstrap-function.js"></script>
     <script src="script/cache-resetter.js"></script>
     <script src="script/content-loader.js"></script>
