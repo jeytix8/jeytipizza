@@ -50,6 +50,85 @@ function pasteUpload(e, target) {
     }
 }
 
+// Account Update ______________________________________________
+$(document).on('change', '#edit-account-image', function(e) {
+    fileUpload(e, 'account');
+});
+
+$(document).on('paste', '#edit-account-form', function(e) {
+    pasteUpload(e, 'account');
+});
+
+// Get Details
+$(document).on('click', '#account-btn', function () {
+    $.ajax({
+        url: 'controller/admin-content.php',
+        type: 'GET',
+        data: { action: 'edit-account' },  // No need to pass ID since we'll use session
+        success: function (response) {
+            try {
+                if (!response) {
+                    throw new Error('Empty response');
+                }
+                const account = JSON.parse(response);
+                if (account && account.username) {
+                    // Populate the edit form with account data
+                    $('#edit-account-form [name="edit-username"]').val(account.username);
+                    $('#edit-account-form [name="edit-email"]').val(account.email);
+                    $('#edit-account-form [name="edit-cropped-image"]').val(account.image);
+                    $('#edit-account-image-preview').attr('src', account.image).show();
+                    $('#edit-account-upload-label').text('Change Image');
+                    $('#account-modal').modal('show');
+                } else {
+                    throw new Error('Invalid account data');
+                }
+            } catch (e) {
+                console.error('Invalid JSON response:', response);
+                alert('Account not found or invalid data received');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
+
+// Update
+$(document).on('submit', '#edit-account-form', function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append('action', 'update');
+
+
+    $.ajax({
+        url: 'controller/admin-content.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            if (response.trim() === "Update") {
+                readProducts();
+                showToast("Product updated successfully!", 3000);
+
+                $('#edit-modal').modal('hide');
+                $('#edit-product-form')[0].reset();
+                $('#edit-image-preview').hide();
+                cropper.destroy();
+            }
+            else {
+                alert(response);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
+
+
+
 // CREATE Product ______________________________________________
 $(document).on('change', '#add-product-image', function (e) {
     fileUpload(e, 'add'); // 👈 tag as add
@@ -137,6 +216,21 @@ $(document).on('change', '#edit-product-image', function (e) {
 
 $(document).on('paste', '#edit-product-form', function (e) {
     pasteUpload(e, 'edit');
+});
+
+$(document).on('change', '.form-select', function () {
+    const $row = $(this).closest('tr');
+    const productId = $row.find('th').text().trim();
+    const status = $(this).val() === 'product-sold' ? 'Sold Out' : 'Available';
+
+    $.ajax({
+        url: 'controller/admin-content.php',
+        type: 'POST',
+        data: { action: 'update_status', id: productId, status: status },
+        success: function (response) {
+            showToast(response, 2000);
+        }
+    });
 });
 
 // Get Details
@@ -245,3 +339,5 @@ $(document).on('click', '.delete-btn', function () {
         }
     });
 });
+
+

@@ -1,5 +1,34 @@
 <?php
 include 'connect.php';
+session_start();
+
+// Get Edit Account
+if (isset($_GET['action']) && $_GET['action'] === 'edit-account') {
+    $accountId = $_SESSION['userID'];
+    $stmt = $conn->prepare("SELECT id, username, email, image FROM accounts WHERE id = ?");
+    $stmt->bind_param("i", $accountId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $account = $result->fetch_assoc();
+        $account['image'] = !empty($account['image']) ? 
+            'data:image/jpeg;base64,' . base64_encode($account['image']) : 
+            'assets/default-user.png';
+        $account_details = [
+            'id' => $account['id'],
+            'username' => $account['username'],
+            'email' => $account['email'],
+            'image' => $account['image']
+        ];
+
+        echo json_encode($account_details);
+    } else {
+        echo json_encode(null);
+    }
+    $stmt->close();
+    $conn->close();
+}
+
 
 // Create Product
 if (
@@ -46,8 +75,8 @@ if (
 
 // Read Product
 if (isset($_GET['action']) && $_GET['action'] === 'read') {
-    $result = $conn->query("SELECT id, name, description, price, image FROM products");
-    
+    $result = $conn->query("SELECT id, name, description, price, status, image FROM products");
+
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             // If image exists use it, else placeholder
@@ -66,8 +95,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'read') {
                     <td>&#8369 ' . number_format($row['price']) . '</td>
                     <td>
                         <select class="form-select form-select-sm">
-                            <option value="product-avail">Available</option>
-                            <option value="product-sold">Sold Out</option>
+                            <option value="product-avail" ' . ($row['status'] === 'Available' ? 'selected' : '') . '>Available</option>
+                            <option value="product-sold" ' . ($row['status'] === 'Sold Out' ? 'selected' : '') . '>Sold Out</option>
                         </select>
                     </td>
                     <td>
@@ -144,6 +173,20 @@ if (isset($_POST['action']) && $_POST['action'] === 'update') {
         echo "Error: " . $stmt->error;
     }
 
+    $stmt->close();
+    $conn->close();
+}
+
+if (isset($_POST['action']) && $_POST['action'] === 'update_status') {
+    $productId = $_POST['id'];
+    $status = $_POST['status'];
+    $stmt = $conn->prepare("UPDATE products SET status = ? WHERE id = ?");
+    $stmt->bind_param("si", $status, $productId);
+    if ($stmt->execute()) {
+        echo "Status updated!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
     $stmt->close();
     $conn->close();
 }
