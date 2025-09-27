@@ -2,34 +2,6 @@
 include 'connect.php';
 session_start();
 
-// Get Edit Account
-if (isset($_GET['action']) && $_GET['action'] === 'edit-account') {
-    $accountId = $_SESSION['userID'];
-    $stmt = $conn->prepare("SELECT id, username, email, image FROM accounts WHERE id = ?");
-    $stmt->bind_param("i", $accountId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows > 0) {
-        $account = $result->fetch_assoc();
-        $account['image'] = !empty($account['image']) ? 
-            'data:image/jpeg;base64,' . base64_encode($account['image']) : 
-            'assets/default-user.png';
-        $account_details = [
-            'id' => $account['id'],
-            'username' => $account['username'],
-            'email' => $account['email'],
-            'image' => $account['image']
-        ];
-
-        echo json_encode($account_details);
-    } else {
-        echo json_encode(null);
-    }
-    $stmt->close();
-    $conn->close();
-}
-
-
 // Create Product
 if (
     isset($_POST['action']) && $_POST['action'] === 'create' &&

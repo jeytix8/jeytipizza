@@ -20,6 +20,7 @@ if($result->num_rows){
         $_SESSION['username'] = $row['username'];
         $_SESSION['email'] = $row['email'];
         $_SESSION['type'] = $row['type'];
+        $_SESSION['user_image'] = $row['image'];
         
         echo 'verified';
     }

@@ -52,10 +52,19 @@ if ($_SESSION['type'] == 'customer') {
                 <!-- Profile -->
                 <li class="nav-item dropdown">
                     <a class="nav-link p-0" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="rounded" src="assets/avatar.png" alt="profile" width="30">
+                        <img class="rounded" src="
+                            <?php
+                                if (!empty($_SESSION['user_image'])) {
+                                    echo 'data:image/jpeg;base64,' . base64_encode($_SESSION['user_image']);
+                                } else {
+                                    echo 'assets/default-user.png';
+                                }
+                            ?>
+                        " alt="profile" width="30">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end bg-text-light" id="dropdown-profile">
-                        <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#account-modal" id="account-btn">Account</button></li>
+                        <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#account-modal"
+                                id="account-btn">Account</button></li>
                         <li><a class="dropdown-item" href="controller/logout.php">Logout</a></li>
                     </ul>
                 </li>
@@ -67,62 +76,62 @@ if ($_SESSION['type'] == 'customer') {
     </div>
 
     <!--Account Modal -->
-        <div class="modal fade" id="account-modal" tabindex="-1" aria-labelledby="account-modalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="account-modalLabel">Account Settings</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <!-- Information -->
-                    <form id="edit-account-form" enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="edit-account-id">
-                        
-                        <div class="modal-body">
-                            <!-- Image Preview -->
-                            <div class="mb-2 text-center">
-                                <img id="edit-accountimage-preview" src="" alt="Preview" style="max-width:100px; display:none;">
-                            </div>
-
-                            <!-- Image Upload Box -->
-                            <div class="input-group mb-2">
-                                <label for="edit-account-image" class="form-control text-center" style="cursor:pointer;">
-                                    <span id="edit-account-upload-label">Upload</span>
-                                    <input type="file" id="edit-account-image" name="edit-account-image" accept="image/*"
-                                        style="display:none;">
-                                </label>
-                            </div>
-
-                            <!-- Username -->
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                <input type="text" class="form-control" placeholder="Username"
-                                    name="edit-username" required>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-                                <input type="text" class="form-control" placeholder="Email"
-                                    name="edit-email" required>
-                            </div>
-
-                            <!--Change Password -->
-                            <div class="input-group mb-2">
-                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                <input type="password" class="form-control" placeholder="New Password" name="account-password"
-                                    required>
-                            </div>
-                            <input type="hidden" name="account-cropped-image" id="account-cropped-image">
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="submit" class="btn btn-danger">Save changes</button>
-                        </div>
-                    </form>
+    <div class="modal fade" id="account-modal" tabindex="-1" aria-labelledby="account-modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="account-modalLabel">Account Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
+                <!-- Information -->
+                <form id="edit-account-form" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="edit-account-id">
+
+                    <div class="modal-body">
+                        <!-- Image Preview -->
+                        <div class="mb-2 text-center">
+                            <img id="edit-account-image-preview" src="" alt="Preview"
+                                style="max-width:100px; display:none;">
+                        </div>
+
+                        <!-- Image Upload Box -->
+                        <div class="input-group mb-2">
+                            <label for="edit-account-image" class="form-control text-center" style="cursor:pointer;">
+                                <span id="edit-account-upload-label">Upload</span>
+                                <input type="file" id="edit-account-image" name="edit-account-image" accept="image/*"
+                                    style="display:none;">
+                            </label>
+                        </div>
+
+                        <!-- Username -->
+                        <div class="input-group mb-2">
+                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" name="edit-username"
+                                required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="input-group mb-2">
+                            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                            <input type="email" class="form-control" placeholder="Email" name="edit-email" required>
+                        </div>
+
+                        <!--Change Password -->
+                        <div class="input-group mb-2">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" class="form-control" placeholder="New Password (optional)"
+                                name="edit-password">
+                        </div>
+                        <input type="hidden" name="edit-account-cropped-image" id="edit-account-cropped-image">
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-danger" id="update-account-btn">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
     <!-- Bootstrap -->
     <?php include 'includes/bootstrap.php'; ?>

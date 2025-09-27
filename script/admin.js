@@ -10,7 +10,10 @@ function openCropperWithImage(src, target) {
     const cropModal = new bootstrap.Modal(cropModalEl);
     cropModal.show();
 
-    if (cropper) cropper.destroy();
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
 
     setTimeout(() => {
         cropper = new Cropper(document.getElementById('cropper-image'), {
@@ -51,18 +54,20 @@ function pasteUpload(e, target) {
 }
 
 // Account Update ______________________________________________
-$(document).on('change', '#edit-account-image', function(e) {
+$(document).on('change', '#edit-account-image', function (e) {
+    // Hide the account modal before showing cropper
+    $('#account-modal').modal('hide');
     fileUpload(e, 'account');
 });
 
-$(document).on('paste', '#edit-account-form', function(e) {
+$(document).on('paste', '#edit-account-form', function (e) {
     pasteUpload(e, 'account');
 });
 
 // Get Details
 $(document).on('click', '#account-btn', function () {
     $.ajax({
-        url: 'controller/admin-content.php',
+        url: 'controller/admin-nav.php',
         type: 'GET',
         data: { action: 'edit-account' },  // No need to pass ID since we'll use session
         success: function (response) {
@@ -98,24 +103,23 @@ $(document).on('submit', '#edit-account-form', function (e) {
     e.preventDefault();
 
     var formData = new FormData(this);
-    formData.append('action', 'update');
-
+    formData.append('action', 'update-account');
 
     $.ajax({
-        url: 'controller/admin-content.php',
+        url: 'controller/admin-nav.php',
         type: 'POST',
         data: formData,
         processData: false,
         contentType: false,
         success: function (response) {
-            if (response.trim() === "Update") {
-                readProducts();
-                showToast("Product updated successfully!", 3000);
-
-                $('#edit-modal').modal('hide');
-                $('#edit-product-form')[0].reset();
-                $('#edit-image-preview').hide();
-                cropper.destroy();
+            if (response.trim() === "Updated account") {
+                $('#update-account-btn').html(showLoader.removeClass('d-none')).prop('disabled', true);
+                setTimeout(function () {
+                    showToast("Account updated successfully!", 1200);
+                }, 500);
+                setTimeout(function () {
+                    location.reload(); 
+                }, 1800); 
             }
             else {
                 alert(response);
@@ -138,6 +142,7 @@ $(document).on('paste', '#add-product-form', function (e) {
     pasteUpload(e, 'add');
 });
 
+// After cropping, show the account modal again
 $(document).on('click', '#crop-btn', function () {
     if (!cropper) return;
     const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
@@ -150,6 +155,14 @@ $(document).on('click', '#crop-btn', function () {
         $('#edit-cropped-image').val(canvas.toDataURL('image/png'));
         $('#edit-upload-label').text('Change Image');
         $('#edit-image-preview').attr('src', canvas.toDataURL('image/png')).show();
+    } else if (cropTarget === 'account') {
+        $('#edit-account-cropped-image').val(canvas.toDataURL('image/png'));
+        $('#edit-account-upload-label').text('Change Image');
+        $('#edit-account-image-preview').attr('src', canvas.toDataURL('image/png')).show();
+        $('#account-modal').modal('show');
+        setTimeout(function () {
+            $('#edit-account-form input:visible:first').focus();
+        }, 300);
     }
 
     bootstrap.Modal.getInstance(document.getElementById('crop-modal')).hide();
@@ -176,7 +189,10 @@ $(document).on('submit', '#add-product-form', function (e) {
                 $('#add-modal').modal('hide');
                 $('#add-product-form')[0].reset();
                 $('#add-image-preview').hide();
-                cropper.destroy();
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
                 readProducts();
             }
             else {
@@ -284,7 +300,10 @@ $(document).on('submit', '#edit-product-form', function (e) {
                 $('#edit-modal').modal('hide');
                 $('#edit-product-form')[0].reset();
                 $('#edit-image-preview').hide();
-                cropper.destroy();
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
             }
             else {
                 alert(response);
@@ -324,7 +343,7 @@ $(document).on('click', '.delete-btn', function () {
                             icon: "success"
                         });
                     }
-                    else{
+                    else {
                         Swal.fire({
                             title: "Error!",
                             text: response,

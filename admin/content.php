@@ -74,7 +74,7 @@
                             <!-- Product Description -->
                             <div class="input-group mb-1">
                                 <span class="input-group-text"><i class="bi bi-pen-fill"></i></span>
-                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                <textarea class="form-control" id="add-product-description"
                                     placeholder="Product description" name="add-product-description"
                                     required></textarea>
                             </div>
@@ -137,7 +137,7 @@
                             <!-- Product Description -->
                             <div class="input-group mb-1">
                                 <span class="input-group-text"><i class="bi bi-pen-fill"></i></span>
-                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                <textarea class="form-control" id="edit-product-description"
                                     placeholder="Product description" name="edit-product-description"
                                     required></textarea>
                             </div>
